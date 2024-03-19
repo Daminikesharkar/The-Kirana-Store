@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.get('/',homePageController.getIndexPage); //show home page html 
 router.post('/signup',homePageController.postUser); //signUp user route
+router.post('/login',homePageController.loginUser); //login user route
 
 module.exports = router;
