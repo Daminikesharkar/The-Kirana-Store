@@ -1,4 +1,5 @@
 const path = require('path');
+const bcrypt = require('bcrypt');
 
 const Users = require('../models/users');
 const { where } = require('sequelize');
@@ -23,10 +24,13 @@ exports.postUser = async (req,res)=>{
                 message: 'User already exists with this email address'
             });
         }else{
+            const saltrounds = 10;
+            const hashedPassword = await bcrypt.hash(password,10);
+
             const newUser = await Users.create({
                 username: username,
                 email: email,
-                password: password 
+                password: hashedPassword 
             })
             
             return res.status(200).json({
@@ -46,7 +50,8 @@ exports.loginUser = async(req,res)=>{
     try {        
         const user = await Users.findOne({where:{email:email}})
         if(user){
-            if(password === user.password){
+            const passwordCompare = await bcrypt.compare(password,user.password);
+            if(passwordCompare){
                 return res.status(200).json({
                     message:"User logged in successfully!",
                     user:user
