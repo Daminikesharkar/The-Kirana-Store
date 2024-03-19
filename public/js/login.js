@@ -28,11 +28,14 @@ async function loginUser(userdata){
 
         if (response.status === 200) {
             console.log(response.data.message);
+            window.location.href = `/userStore`;
         }else if(response.status === 400) {
             console.log(response.data.message);
+            alert(response.data.message)
             throw new Error("Failed to log In:" + response.data.message);
         }else if(response.status === 401) {
             console.log(response.data.message);
+            alert(response.data.message)
             throw new Error("Failed to log In:" + response.data.message);
         }
 

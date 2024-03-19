@@ -2,8 +2,6 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 
 const Users = require('../models/users');
-const { where } = require('sequelize');
-const { use } = require('../routes/home');
 
 const indexPage = path.join(__dirname,'../views/index.html');
 
