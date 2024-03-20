@@ -43,3 +43,15 @@ exports.getAllProducts = async (req,res)=>{
         res.status(500).json({error: 'Error getting all products'});
     }
 }
+
+exports.deleteProduct = async (req,res)=>{
+    try {
+        const id = req.params.id;
+        const product = await kiranaProducts.findByPk(id);
+        await product.destroy();
+
+        return res.json({ message: 'product deleted successfully' });
+    } catch (error) {
+        res.status(500).json({error: 'Error deleting product'});
+    }
+}

@@ -1,4 +1,5 @@
 import axios from 'https://cdn.jsdelivr.net/npm/axios@1.5.1/+esm';
+import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid';
 
 const body = document.querySelector("body");
 const modeToggle = body.querySelector(".mode-toggle");
@@ -57,17 +58,25 @@ form.addEventListener('submit', function(event) {
 
 function addProductsToUI(userdata){
 
+    const uniqueId = uuidv4();
+
     const itemData = document.querySelector('.item');
     const quantityData = document.querySelector('.quantity');
     const categoryData = document.querySelector('.category');
     const priceData = document.querySelector('.price');
     const manageData = document.querySelector('.manage');
   
-    itemData.innerHTML += `<span class="data-list">${userdata.item}</span>`;
-    quantityData.innerHTML += `<span class="data-list">${userdata.quantity}</span>`;
-    categoryData.innerHTML += `<span class="data-list">${userdata.category}</span>`;
-    priceData.innerHTML += `<span class="data-list">${userdata.price}</span>`;
-    manageData.innerHTML += `<span class="data-list"><a href="">remove</a></span>`;
+    // itemData.innerHTML += `<span class="data-list">${userdata.item}</span>`;
+    // quantityData.innerHTML += `<span class="data-list">${userdata.quantity}</span>`;
+    // categoryData.innerHTML += `<span class="data-list">${userdata.category}</span>`;
+    // priceData.innerHTML += `<span class="data-list">${userdata.price}</span>`;
+    // manageData.innerHTML += `<span class="data-list"><a href="">remove</a></span>`;
+
+    itemData.innerHTML += `<span class="data-list" id="item-${uniqueId}">${userdata.item}</span>`;
+    quantityData.innerHTML += `<span class="data-list" id="quantity-${uniqueId}">${userdata.quantity}</span>`;
+    categoryData.innerHTML += `<span class="data-list" id="category-${uniqueId}">${userdata.category}</span>`;
+    priceData.innerHTML += `<span class="data-list" id="price-${uniqueId}">${userdata.price}</span>`;
+    manageData.innerHTML += `<span class="data-list" id="${uniqueId}"> <a class="delete" href="#" data-user-data='${JSON.stringify(userdata)}'>remove</a> </span>`;;
 
 }
 
@@ -76,13 +85,43 @@ async function addProducts(userdata){
         const token = localStorage.getItem('token');
         const response = await axios.post('/addProducts',userdata,{headers:{"Authorization":token}});
 
-        console.log(response.data.message);
-        addProductsToUI(userdata);
+        addProductsToUI(response.data.product);
     } catch (error) {
         console.error("Error adding product", error.message);
     }
     
 }   
+
+const row = document.getElementById('activity-data');
+row.addEventListener('click',(e)=>{
+    if(e.target.classList.contains('delete')){
+
+        const tagId = e.target.parentElement.getAttribute('id');
+        const userdata = JSON.parse(e.target.getAttribute('data-user-data'));
+
+        removeProduct(userdata.id,tagId);
+    }
+})
+
+async function removeProduct(id,tagId){
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('/deleteProduct'+`/${id}`,{headers:{"Authorization":token}});
+        alert(response.data.message);
+        removeProductFromUI(tagId);
+
+    } catch (error) {
+        console.error("Error deleting product", error.message);
+    }    
+}
+
+function removeProductFromUI(tagId){
+    document.getElementById(`item-${tagId}`).remove;
+    document.getElementById(`quantity-${tagId}`).remove;
+    document.getElementById(`category-${tagId}`).remove;
+    document.getElementById(`price-${tagId}`).remove;
+    document.getElementById(`${tagId}`).remove;
+}
 
 async function displayAllProducts(){
     try {
