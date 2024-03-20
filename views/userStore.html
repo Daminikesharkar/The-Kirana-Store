@@ -3,9 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <link rel="stylesheet" href="css/userStore.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title>User Store Page</title>
 </head>
 <body>
-    <h1>User Store</h1>
+    <nav>
+
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="images/logo.jpg" alt="">
+            </div>
+            <span class="logo_name">Kiranastore</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li>
+                    <a href="#"> <i class="uil uil-estate"></i> <span class="link-name">Dahsboard</span> </a>
+                </li>
+                <li>
+                    <a href="#"><i class="uil uil-files-landscapes"></i> <span class="link-name">History</span> </a>
+                </li>
+                <li>
+                    <a href="#"><i class="uil uil-brightness-plus"></i> <span class="link-name">Buy premium</span> </a>
+                </li>
+            </ul>
+
+            <ul class="logout-mode">
+                <li>
+                    <a href="#"><i class="uil uil-signout"></i> <span class="link-name">Logout</span> </a>
+                </li>
+                <li class="mode">
+                    <a href="#"><i class="uil uil-moon"></i> <span class="link-name">Dark Mode</span></a>
+                    <div class="mode-toggle">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+
+            <div class="search-box">
+                <i class="uil uil-search"></i>
+                <input type="text" placeholder="Search here...">
+            </div>
+
+            <img src="images/user.jpg" alt="">
+        </div>
+
+        <div class="dash-content">
+            <div class="overview">
+                <div class="title">
+                    <i class="uil uil-shopping-bag"></i>
+                    <span class="text">Add groceries</span>
+                </div>
+                <div class="container">
+                    <form action="#">
+                        <div class="form-row">
+                            <div class="input-data">
+                                <input id="item" type="text" required>
+                                <div class="underline"></div>
+                                <label for="">Add item</label>
+                            </div>
+                            <div class="input-data">
+                                <input id="quantity" type="text" required>
+                                <div class="underline"></div>
+                                <label for="">Add quantity</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-data">
+                                <input id="category" type="text" required>
+                                <div class="underline"></div>
+                                <label for="">Add Category</label>
+                            </div>
+                            <div class="input-data">
+                                <input id="price" type="text" required>
+                                <div class="underline"></div>
+                                <label for="">Price</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-data textarea">
+
+                                <div class="form-row submit-btn">
+                                    <div class="input-data">
+                                        <div class="inner"></div>
+                                        <input type="submit" value="Add Product">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="activity">
+                <div class="title">
+                    <i class="uil uil-parcel"></i>
+                    <span class="text">Added Products</span>
+                </div>
+
+                <div class="activity-data">
+                    <div class="data item">
+                        <span class="data-title data-title-item">Item</span>
+                        <span class="data-list">Clove</span>
+                        <span class="data-list">Egg</span>
+                        <span class="data-list">Bread</span>
+                    </div>
+                    <div class="data quantity">
+                        <span class="data-title data-title-quantity">Quantity</span>
+                        <span class="data-list">1 kg</span>
+                        <span class="data-list">1 dozen</span>
+                        <span class="data-list">2</span>
+                    </div>
+                    <div class="data category">
+                        <span class="data-title data-title-category">Category</span>
+                        <span class="data-list">spices</span>
+                        <span class="data-list">dairy</span>
+                        <span class="data-list">dairy</span>
+                    </div>
+                    <div class="data price">
+                        <span class="data-title data-title-price">Price</span>
+                        <span class="data-list">30</span>
+                        <span class="data-list">60</span>
+                        <span class="data-list">60</span>
+                    </div>
+                    <div class="data manage">
+                        <span class="data-title data-title-price">Manage</span>
+                        <span class="data-list"><a href="">remove</a></span>
+                        <span class="data-list"><a href="">remove</a></span>
+                        <span class="data-list"><a href="">remove</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="js/userStore.js"></script>
 </body>
 </html>
