@@ -1,3 +1,5 @@
+import axios from 'https://cdn.jsdelivr.net/npm/axios@1.5.1/+esm';
+
 const body = document.querySelector("body");
 const modeToggle = body.querySelector(".mode-toggle");
 const sidebar = body.querySelector("nav");
@@ -33,26 +35,50 @@ sidebarToggle.addEventListener("click", () => {
 
 
 const form = document.querySelector('form');
+
+const item = document.getElementById('item');
+const quantity = document.getElementById('quantity');
+const category = document.getElementById('category');
+const price = document.getElementById('price');
   
 form.addEventListener('submit', function(event) {
     event.preventDefault();
-  
-    const item = document.getElementById('item').value.trim();
-    const quantity = document.getElementById('quantity').value.trim();
-    const category = document.getElementById('category').value.trim();
-    const price = document.getElementById('price').value.trim();
-  
+
+    const userdata = {
+        item:item.value,
+        quantity:quantity.value,
+        category:category.value,
+        price:price.value
+    }
+
+    addProducts(userdata);  
+    form.reset();
+});
+
+function addProductsToUI(userdata){
+
     const itemData = document.querySelector('.item');
     const quantityData = document.querySelector('.quantity');
     const categoryData = document.querySelector('.category');
     const priceData = document.querySelector('.price');
     const manageData = document.querySelector('.manage');
   
-    itemData.innerHTML += `<span class="data-list">${item}</span>`;
-    quantityData.innerHTML += `<span class="data-list">${quantity}</span>`;
-    categoryData.innerHTML += `<span class="data-list">${category}</span>`;
-    priceData.innerHTML += `<span class="data-list">${price}</span>`;
-    manageData.innerHTML += `<span class="data-list"><a href="">remove</a></span>`
-  
-    form.reset();
-});
+    itemData.innerHTML += `<span class="data-list">${userdata.item}</span>`;
+    quantityData.innerHTML += `<span class="data-list">${userdata.quantity}</span>`;
+    categoryData.innerHTML += `<span class="data-list">${userdata.category}</span>`;
+    priceData.innerHTML += `<span class="data-list">${userdata.price}</span>`;
+    manageData.innerHTML += `<span class="data-list"><a href="">remove</a></span>`;
+
+}
+
+async function addProducts(userdata){
+    try {
+        console.log("in",userdata)
+        const response = await axios.post('/addProducts',userdata);
+        console.log(response.data.message);
+        addProductsToUI(userdata);
+    } catch (error) {
+        console.error("Error adding product", error.message);
+    }
+    
+}   
