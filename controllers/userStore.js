@@ -28,3 +28,16 @@ exports.addProducts = async (req,res)=>{
         res.status(500).json({error: 'Error adding product'});
     }
 }
+
+exports.getAllProducts = async (req,res)=>{
+    try {
+        const products = await kiranaProducts.findAll();
+
+        return res.status(200).json({
+            products: products
+        })
+
+    } catch (error) {
+        res.status(500).json({error: 'Error getting all products'});
+    }
+}

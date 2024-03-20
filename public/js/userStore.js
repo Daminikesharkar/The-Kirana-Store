@@ -82,3 +82,22 @@ async function addProducts(userdata){
     }
     
 }   
+
+async function displayAllProducts(){
+    try {
+        const response = await axios.get('/getAllProducts');
+        const length = Object.keys(response.data.products).length;
+
+        for(let i=0;i<length;i++){
+            const product = response.data.products[i];
+            addProductsToUI(product)
+        }
+        
+    } catch (error) {
+        console.error("Error getting all products", error.message);
+    }
+}
+
+window.addEventListener('load',()=>{
+    displayAllProducts();
+})
