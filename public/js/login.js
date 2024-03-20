@@ -28,7 +28,11 @@ async function loginUser(userdata){
 
         if (response.status === 200) {
             console.log(response.data.message);
+
+            //store token in localstorage
+            localStorage.setItem('token',response.data.token);            
             window.location.href = `/userStore`;
+            
         }else if(response.status === 400) {
             console.log(response.data.message);
             alert(response.data.message)

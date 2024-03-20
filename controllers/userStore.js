@@ -15,9 +15,9 @@ exports.addProducts = async (req,res)=>{
             item:item,
             quantity:quantity,
             category:category,
-            price:price
+            price:price,
+            userId:req.user.id
         })
-        console.log(newProduct);
 
         return res.status(200).json({
             message: 'Product added successfully',
@@ -31,7 +31,9 @@ exports.addProducts = async (req,res)=>{
 
 exports.getAllProducts = async (req,res)=>{
     try {
-        const products = await kiranaProducts.findAll();
+        const products = await kiranaProducts.findAll({where: {
+            userId: req.user.id,
+        }});
 
         return res.status(200).json({
             products: products

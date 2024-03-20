@@ -73,8 +73,9 @@ function addProductsToUI(userdata){
 
 async function addProducts(userdata){
     try {
-        console.log("in",userdata)
-        const response = await axios.post('/addProducts',userdata);
+        const token = localStorage.getItem('token');
+        const response = await axios.post('/addProducts',userdata,{headers:{"Authorization":token}});
+
         console.log(response.data.message);
         addProductsToUI(userdata);
     } catch (error) {
@@ -85,7 +86,10 @@ async function addProducts(userdata){
 
 async function displayAllProducts(){
     try {
-        const response = await axios.get('/getAllProducts');
+        const token = localStorage.getItem('token');
+        console.log('in');
+        const response = await axios.get('/getAllProducts',{headers:{"Authorization":token}});
+
         const length = Object.keys(response.data.products).length;
 
         for(let i=0;i<length;i++){

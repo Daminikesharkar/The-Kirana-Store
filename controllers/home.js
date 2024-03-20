@@ -1,5 +1,6 @@
 const path = require('path');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const Users = require('../models/users');
 
@@ -41,6 +42,13 @@ exports.postUser = async (req,res)=>{
     }
 }
 
+//function to generate token
+function generateToken(userdata){
+    const token = jwt.sign(userdata,process.env.SECRETKEY,{ expiresIn: '1h' });
+    console.log(token);
+    return token;
+}
+
 //login controller
 exports.loginUser = async(req,res)=>{
     const {email,password} = req.body;
@@ -52,7 +60,8 @@ exports.loginUser = async(req,res)=>{
             if(passwordCompare){
                 return res.status(200).json({
                     message:"User logged in successfully!",
-                    user:user
+                    user:user,
+                    token:generateToken({userId:user.id})
                 })
             }else{
                 return res.status(401).json({
