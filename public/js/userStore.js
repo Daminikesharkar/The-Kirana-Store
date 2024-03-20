@@ -87,7 +87,6 @@ async function addProducts(userdata){
 async function displayAllProducts(){
     try {
         const token = localStorage.getItem('token');
-        console.log('in');
         const response = await axios.get('/getAllProducts',{headers:{"Authorization":token}});
 
         const length = Object.keys(response.data.products).length;
