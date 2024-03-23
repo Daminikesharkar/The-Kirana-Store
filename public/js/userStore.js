@@ -76,7 +76,14 @@ function addProductsToUI(userdata){
     quantityData.innerHTML += `<span class="data-list" id="quantity-${uniqueId}">${userdata.quantity}</span>`;
     categoryData.innerHTML += `<span class="data-list" id="category-${uniqueId}">${userdata.category}</span>`;
     priceData.innerHTML += `<span class="data-list" id="price-${uniqueId}">${userdata.price}</span>`;
-    manageData.innerHTML += `<span class="data-list" id="${uniqueId}"> <a class="delete" href="#" data-user-data='${JSON.stringify(userdata)}'>remove</a> </span>`;;
+    manageData.innerHTML += `<span class="data-list" id="${uniqueId}"> <a class="delete" href="#" data-user-data='${JSON.stringify(userdata)}'>remove</a> </span>`;
+
+
+    // itemData.innerHTML = newItemSpan + itemData.innerHTML;
+    // quantityData.innerHTML = newQuantitySpan + quantityData.innerHTML;
+    // categoryData.innerHTML = newCategorySpan + categoryData.innerHTML;
+    // priceData.innerHTML = newPriceSpan + priceData.innerHTML;
+    // manageData.innerHTML = newDeleteSpan + manageData.innerHTML;
 
 }
 

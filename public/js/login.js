@@ -1,6 +1,7 @@
 import axios from 'https://cdn.jsdelivr.net/npm/axios@1.5.1/+esm'
 
 const loginForm = document.getElementById('login');
+const forgetPasswordLink = document.getElementById('forget-password');
 
 const email = document.getElementById('login-email');
 const password = document.getElementById('login-password');
@@ -47,3 +48,9 @@ async function loginUser(userdata){
         console.error("Error logging User", error.message);
     }
 }
+
+//forget password 
+forgetPasswordLink.addEventListener('click',async (e)=>{
+    e.preventDefault();
+    window.location.href = `/forgetPasswordpage`;
+})

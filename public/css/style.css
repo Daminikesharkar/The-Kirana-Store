@@ -183,7 +183,7 @@ body{
 .forms .form-content .text a:hover{
   text-decoration: underline;
 }
-.forms .form-content .button{
+.forms .form-content .button{ 
   color: #fff;
   margin-top: 40px;
 }
