@@ -13,7 +13,7 @@ exports.getEmailToSendResetLink = (req,res)=>{
 
     console.log(process.env.FROM_ADDRESS)
 
-    sgMail.setApiKey('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')
+    sgMail.setApiKey(process.env.SENGRID_API_KEY )
 
     const msg = {
         to: 'daminisk272@gmail.com',
