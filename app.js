@@ -27,8 +27,8 @@ Products.belongsTo(User,{constraints:true, onDelete:'CASCADE'});
 User.hasMany(forgetpassword);
 forgetpassword.belongsTo(User,{constraints:true, onDelete:'CASCADE'})
 
-sequelize.sync({ alter: true })
-// sequelize.sync();
+// sequelize.sync({ alter: true })
+sequelize.sync();
 
 app.listen(3000, ()=>{
     console.log('Server is live on port 3000');
