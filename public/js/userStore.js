@@ -34,6 +34,12 @@ sidebarToggle.addEventListener("click", () => {
     }
 })
 
+const historyLink = document.getElementById("historyLink");
+historyLink.addEventListener("click", function(event) {
+    event.preventDefault();
+
+    window.location.href = "/history";
+});
 
 const form = document.querySelector('form');
 

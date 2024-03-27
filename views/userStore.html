@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 
     <title>User Store Page</title>
+    <style>
+        .nav-links .active {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+        }
+    </style>
 </head>
 <body>
     <nav>
@@ -21,14 +27,14 @@
 
         <div class="menu-items">
             <ul class="nav-links">
-                <li>
-                    <a href="#"> <i class="uil uil-estate"></i> <span class="link-name">Dahsboard</span> </a>
+                <li class="active">
+                    <a id="dashboardLink" href="/userStore"> <i class="uil uil-estate"></i> <span  class="link-name">Dahsboard</span> </a>
                 </li>
                 <li>
-                    <a href="#"><i class="uil uil-files-landscapes"></i> <span class="link-name">History</span> </a>
+                    <a id="historyLink"><i class="uil uil-files-landscapes"></i> <span class="link-name">History</span> </a>
                 </li>
                 <li>
-                    <a href="#"><i class="uil uil-brightness-plus"></i> <span class="link-name">Buy premium</span> </a>
+                    <a id="buyPremiumLink"><i class="uil uil-brightness-plus"></i> <span class="link-name">Buy premium</span> </a>
                 </li>
             </ul>
 
