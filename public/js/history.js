@@ -52,10 +52,29 @@ async function showDownloadedHistory(){
         const token = localStorage.getItem('token');
         const response = await axios.get('/downloadHistory',{headers:{"Authorization":token}});
 
-        console.log(response.data.history);
+        addUrlsToUI(response.data.history);
         
     } catch (error) {
         console.error("Error showing history", error.message);
+    }
+}
+
+function addUrlsToUI(urls){
+    const tableBody = document.querySelector('.tbl-content-history tbody');
+    tableBody.innerHTML = '';
+
+    const length = Object.keys(urls).length;
+
+    for(let i=0;i<length;i++){
+        const url = urls[i];
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${i+1}</td>
+            <td><a href="${url.downloadUrl}">myDownload-${url.createdAt}</a></td>
+        `;
+    
+        tableBody.appendChild(row);        
     }
 }
 
@@ -87,6 +106,9 @@ async function getWeeklydata(){
         const token = localStorage.getItem('token');
         const response = await axios.get('/getWeeklyData',{headers:{"Authorization":token}});
 
+        const tableBody = document.querySelector('.tbl-content tbody');
+        tableBody.innerHTML = '';
+
         const length = Object.keys(response.data.products).length;
 
         for(let i=0;i<length;i++){
@@ -112,3 +134,7 @@ function addProductsToUI(userdata) {
 
     tableBody.appendChild(row);
 }
+
+window.addEventListener('load',()=>{
+    getWeeklydata();
+})
