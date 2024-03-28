@@ -13,6 +13,27 @@
             border-bottom: 2px solid var(--primary-color);
             padding-bottom: 5px;
         }
+        #pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            margin-bottom: 30px;
+        }
+
+        #pagination button {
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: 1px solid var(--primary-color);
+            background-color: transparent;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        #pagination button:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
     </style>
 </head>
 <body>
@@ -121,35 +142,36 @@
                 <div id="activity-data" class="activity-data">
                     <div class="data item">
                         <span class="data-title data-title-item">Item</span>
-                        <span class="data-list">Clove</span>
+                        <!-- <span class="data-list">Clove</span>
                         <span class="data-list">Egg</span>
-                        <span class="data-list">Bread</span>
+                        <span class="data-list">Bread</span> -->
                     </div>
                     <div class="data quantity">
                         <span class="data-title data-title-quantity">Quantity</span>
-                        <span class="data-list">1 kg</span>
+                        <!-- <span class="data-list">1 kg</span>
                         <span class="data-list">1 dozen</span>
-                        <span class="data-list">2</span>
+                        <span class="data-list">2</span> -->
                     </div>
                     <div class="data category">
                         <span class="data-title data-title-category">Category</span>
-                        <span class="data-list">spices</span>
+                        <!-- <span class="data-list">spices</span>
                         <span class="data-list">dairy</span>
-                        <span class="data-list">dairy</span>
+                        <span class="data-list">dairy</span> -->
                     </div>
                     <div class="data price">
                         <span class="data-title data-title-price">Price</span>
-                        <span class="data-list">30</span>
+                        <!-- <span class="data-list">30</span>
                         <span class="data-list">60</span>
-                        <span class="data-list">60</span>
+                        <span class="data-list">60</span> -->
                     </div>
                     <div class="data manage">
-                        <span class="data-title data-title-price">Manage</span>
+                        <span class="data-title data-title-manage">Manage</span>
+                        <!-- <span class="data-list"><a href="">remove</a></span>
                         <span class="data-list"><a href="">remove</a></span>
-                        <span class="data-list"><a href="">remove</a></span>
-                        <span class="data-list"><a href="">remove</a></span>
+                        <span class="data-list"><a href="">remove</a></span> -->
                     </div>
                 </div>
+                <div id="pagination"></div>
             </div>
         </div>
     </section>

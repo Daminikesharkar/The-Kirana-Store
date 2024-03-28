@@ -136,17 +136,94 @@ function removeProductFromUI(tagId){
     document.getElementById(`${tagId}`).remove;
 }
 
-async function displayAllProducts(){
+const pagination = document.getElementById('pagination');
+
+function showPagination({
+    currentPage,
+    hasNextPage,
+    nextPage,
+    hasPreviousPage,
+    previousPage,
+    lastPage,
+}){
+    pagination.innerHTML='';
+
+    if(hasPreviousPage){
+        const btn2 = document.createElement('button');
+        btn2.innerHTML = previousPage;
+        btn2.addEventListener('click',()=>{
+            getProducts(previousPage);
+        })
+        pagination.appendChild(btn2);
+    }
+
+    const btn1 = document.createElement('button');
+    btn1.innerHTML = `<h3>${currentPage}</h3>`;
+    btn1.addEventListener('click',()=>{
+        getProducts(currentPage);
+    })
+    pagination.appendChild(btn1);
+
+    if(hasNextPage){
+        const btn3 = document.createElement('button');
+        btn3.innerHTML = nextPage;
+        btn3.addEventListener('click',()=>{
+            getProducts(nextPage);
+        })
+        pagination.appendChild(btn3);
+    }
+}
+
+async function getProducts(page){
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('/getAllProducts',{headers:{"Authorization":token}});
+        const response = await axios.get(`/getAllProducts/?page=${page}`,{headers:{"Authorization":token}});
 
-        const length = Object.keys(response.data.products).length;
+        displayProducts(response.data.products);
+        showPagination(response.data);
+        
+    } catch (error) {
+        console.error("Error getting all products", error.message);
+    }
+}
 
-        for(let i=0;i<length;i++){
-            const product = response.data.products[i];
-            addProductsToUI(product)
-        }
+async function displayProducts(products){
+
+    const itemData = document.querySelector('.item');
+    const quantityData = document.querySelector('.quantity');
+    const categoryData = document.querySelector('.category');
+    const priceData = document.querySelector('.price');
+    const manageData = document.querySelector('.manage');
+
+    itemData.innerHTML = '';
+    quantityData.innerHTML = '';
+    categoryData.innerHTML = '';
+    priceData.innerHTML = '';
+    manageData.innerHTML = '';
+
+    itemData.innerHTML += '<span class="data-title data-title-item">Item</span>';
+    quantityData.innerHTML += '<span class="data-title data-title-quantity">Quantity</span>';
+    categoryData.innerHTML += '<span class="data-title data-title-category">Category</span>';
+    priceData.innerHTML += '<span class="data-title data-title-price">Price</span>';
+    manageData.innerHTML += '<span class="data-title data-title-manage">Manage</span>';
+
+
+    const length = Object.keys(products).length;
+
+    for(let i=0;i<length;i++){
+        const product = products[i];
+        addProductsToUI(product)
+    }
+}
+
+async function displayAllProducts(){
+    const page = 1;
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`/getAllProducts/?page=${page}`,{headers:{"Authorization":token}});
+
+        displayProducts(response.data.products);
+        showPagination(response.data);
         
     } catch (error) {
         console.error("Error getting all products", error.message);
