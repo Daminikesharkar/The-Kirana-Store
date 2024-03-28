@@ -1,5 +1,10 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
+
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
 
 const homePageRoutes = require('./routes/home');
 const userStorePageRoutes = require('./routes/userStore');
@@ -19,6 +24,12 @@ app.use(express.urlencoded({extended: false }));
 app.use(express.static(path.join(__dirname,'public')));
 app.use(express.json());
 
+const accessLogStream = fs.createWriteStream(path.join(__dirname,"access.log"),{flags:'a'});
+
+app.use(helmet());
+app.use(compression());
+app.use(morgan('combined',{stream:accessLogStream}));
+
 app.use(homePageRoutes);
 app.use(userStorePageRoutes);
 app.use(forgetPasswordPageRoutes);
@@ -36,6 +47,6 @@ Downloads.belongsTo(User,{constraints:true, onDelete:'CASCADE'})
 // sequelize.sync({ alter: true })
 sequelize.sync();
 
-app.listen(3000, ()=>{
+app.listen(process.env.Port || 3000, ()=>{
     console.log('Server is live on port 3000');
 })
