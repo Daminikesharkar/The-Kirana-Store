@@ -32,7 +32,9 @@ exports.addProducts = async (req,res)=>{
 
 exports.getAllProducts = async (req, res) => {
     const page = +req.query.page || 1;
+    // const ITEMS_PER_PAGE = +req.query.itemsPerPage || 2;
     const ITEMS_PER_PAGE = 2;
+    console.log(+req.query.itemsPerPage);
 
     try {
         const totalItems = await kiranaProducts.count({ where: { userId: req.user.id } });

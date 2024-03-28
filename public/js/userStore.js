@@ -216,11 +216,37 @@ async function displayProducts(products){
     }
 }
 
+const productsPerPageSelect = document.getElementById('productsPerPage');
+const savePreferenceBtn = document.getElementById('savePreferenceBtn');
+
+function getProductsPerPage() {
+    return localStorage.getItem('productsPerPage') || 10; 
+}
+
+function setProductsPerPage(value) {
+    localStorage.setItem('productsPerPage', value);
+}
+
+function displayProductsPerPagePreference() {
+    productsPerPageSelect.value = getProductsPerPage();
+}
+
+savePreferenceBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    const value = productsPerPageSelect.value;
+    setProductsPerPage(value);
+    location.reload();
+});
+
+displayProductsPerPagePreference();
+
 async function displayAllProducts(){
     const page = 1;
+    const itemsPerPage = getProductsPerPage();
+
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`/getAllProducts/?page=${page}`,{headers:{"Authorization":token}});
+        const response = await axios.get(`/getAllProducts/?page=${page}&itemsPerPage=${itemsPerPage}`,{headers:{"Authorization":token}});
 
         displayProducts(response.data.products);
         showPagination(response.data);

@@ -33,6 +33,29 @@
             background-color: var(--primary-color);
             color: white;
         }
+        .user-preference {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .user-preference label,
+        .user-preference select,
+        .user-preference button {
+            margin-left: 10px;
+        }
+
+        .user-preference button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .user-preference button:hover {
+            background-color: var(--primary-color);
+        }
 
     </style>
 </head>
@@ -137,6 +160,18 @@
                 <div class="title">
                     <i class="uil uil-parcel"></i>
                     <span class="text">Added Products</span>
+                </div>
+
+                <div id="userPreference" class="user-preference">
+                    <label for="productsPerPage">Products Per Page:</label>
+                    <select id="productsPerPage">
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                    </select>
+                    <button id="savePreferenceBtn">Save Preference</button>
                 </div>
 
                 <div id="activity-data" class="activity-data">
