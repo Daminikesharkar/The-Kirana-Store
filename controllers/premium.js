@@ -66,36 +66,59 @@ exports.updateTransaction = async (req,res)=>{
         res.status(500).json({error: 'Error updating order'});
     }
 }
-
 exports.showLeaderboard = async (req,res)=>{
     try {
-        console.log("Inside")
-        const user = await User.findAll(
-        {   
+        const users = await User.findAll({
             attributes: [
                 'id',
                 'username',
-                [sequelize.fn('SUM', sequelize.col('kiranaproducts.price')), 'total_spend']
+                'totalspend'
             ],
-            include: [
-                {
-                    model: kiranaProducts,
-                    attributes: []
-                }
-            ],
-            group: ['users.id', 'kiranaproducts.userId'],
-            order: sequelize.literal('total_spend DESC')
+            order: [['totalspend', 'DESC']]
         });
-        const userdata = user.map(user => ({
+
+        const userdata = users.map(user => ({
             id: user.id,
             username: user.username,
-            total_spend: user.get('total_spend')
-        }));
-
-        console.log(userdata);
+            total_spend: user.get('totalspend')
+          }));        
+        
         return res.status(200).json({ userdata: userdata });
         
     } catch (error) {
         res.status(500).json({error: 'Error fetching leaderboard data'});
     }
 }
+
+// exports.showLeaderboard = async (req,res)=>{
+//     try {
+//         console.log("Inside")
+//         const user = await User.findAll(
+//         {   
+//             attributes: [
+//                 'id',
+//                 'username',
+//                 [sequelize.fn('SUM', sequelize.col('kiranaproducts.price')), 'total_spend']
+//             ],
+//             include: [
+//                 {
+//                     model: kiranaProducts,
+//                     attributes: []
+//                 }
+//             ],
+//             group: ['users.id', 'kiranaproducts.userId'],
+//             order: sequelize.literal('total_spend DESC')
+//         });
+//         const userdata = user.map(user => ({
+//             id: user.id,
+//             username: user.username,
+//             total_spend: user.get('total_spend')
+//         }));
+
+//         console.log(userdata);
+//         return res.status(200).json({ userdata: userdata });
+        
+//     } catch (error) {
+//         res.status(500).json({error: 'Error fetching leaderboard data'});
+//     }
+// }

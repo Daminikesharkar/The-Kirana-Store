@@ -1,6 +1,6 @@
 const path = require('path');
 const kiranaProducts = require('../models/kiranaProducts');
-const { totalmem } = require('os');
+const User = require('../models/users');
 
 const userStorePagePath = path.join(__dirname,'../views/userStore.html');
 
@@ -19,6 +19,8 @@ exports.addProducts = async (req,res)=>{
             price:price,
             userId:req.user.id
         })
+        const total_spend = Number(req.user.totalspend) + Number(price);
+        await User.update({totalspend:total_spend},{where:{id:req.user.id}});
 
         return res.status(200).json({
             message: 'Product added successfully',
@@ -64,6 +66,10 @@ exports.deleteProduct = async (req,res)=>{
     try {
         const id = req.params.id;
         const product = await kiranaProducts.findByPk(id);
+
+        const total_spend = Number(req.user.totalspend) - Number(product.price);
+        await User.update({totalspend:total_spend},{where:{id:req.user.id}});
+
         await product.destroy();
 
         return res.json({ message: 'product deleted successfully' });
