@@ -9,4 +9,6 @@ router.get('/premium',premiumController.displayPremiumPage);
 router.get('/buyPremium',middleware.authenticate,premiumController.buyPremium);
 router.post('/updateTransaction',middleware.authenticate,premiumController.updateTransaction);
 
+router.get('/leaderboard',middleware.authenticate,premiumController.showLeaderboard);
+
 module.exports = router;

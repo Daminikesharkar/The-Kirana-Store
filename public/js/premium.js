@@ -44,10 +44,37 @@ premiumButton.addEventListener('click',async()=>{
     }
 })
 
-leaderBoardButton.addEventListener('click', ()=> {
+leaderBoardButton.addEventListener('click', async ()=> {
     document.querySelector('.premium-features-leaderboard').style.display = 'block';
     document.querySelector('.premium-features-download').style.display = 'none';
+    try {
+        console.log("inside")
+        const token = localStorage.getItem('token');
+        const response = await axios.get('/leaderboard',{headers:{"Authorization":token}});
+        addLeaderboardDataToUI(response.data.userdata);
+
+    } catch (error) {
+        console.error("Error fetching leaderboard data", error.message);
+    }
 });
+
+function addLeaderboardDataToUI(userdata){
+    const tableBody = document.querySelector('.leaderboard-table tbody');
+    tableBody.innerHTML = '';
+    const length = Object.keys(userdata).length;
+
+    for(let i=0;i<length;i++){
+        const user = userdata[i];
+        const row = document.createElement('tr');
+        row.innerHTML = `  
+            <td>${i+1}</td>
+            <td>${user.username}</td>
+            <td>${user.total_spend}</td>
+        `;
+    
+        tableBody.appendChild(row);
+    }
+}
 
 downLoadButton.addEventListener('click', ()=> {
     document.querySelector('.premium-features-download').style.display = 'block';

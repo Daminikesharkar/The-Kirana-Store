@@ -1,8 +1,11 @@
 const path = require('path');
 const Razorpay = require('razorpay');
 const jwt = require('jsonwebtoken');
+const sequelize = require('../util/database');
 
 const Order = require('../models/order');
+const User = require('../models/users');
+const kiranaProducts = require('../models/kiranaProducts');
 const premiumPagePath = path.join(__dirname,'../views/premium.html');
 
 exports.displayPremiumPage = (req,res)=>{
@@ -61,5 +64,38 @@ exports.updateTransaction = async (req,res)=>{
 
     } catch (error) {
         res.status(500).json({error: 'Error updating order'});
+    }
+}
+
+exports.showLeaderboard = async (req,res)=>{
+    try {
+        console.log("Inside")
+        const user = await User.findAll(
+        {   
+            attributes: [
+                'id',
+                'username',
+                [sequelize.fn('SUM', sequelize.col('kiranaproducts.price')), 'total_spend']
+            ],
+            include: [
+                {
+                    model: kiranaProducts,
+                    attributes: []
+                }
+            ],
+            group: ['users.id', 'kiranaproducts.userId'],
+            order: sequelize.literal('total_spend DESC')
+        });
+        const userdata = user.map(user => ({
+            id: user.id,
+            username: user.username,
+            total_spend: user.get('total_spend')
+        }));
+
+        console.log(userdata);
+        return res.status(200).json({ userdata: userdata });
+        
+    } catch (error) {
+        res.status(500).json({error: 'Error fetching leaderboard data'});
     }
 }
