@@ -16,6 +16,7 @@ const User = require('./models/users');
 const Products = require('./models/kiranaProducts');
 const forgetpassword = require('./models/password');
 const Downloads = require('./models/download');
+const Order = require('./models/order');
 
 const sequelize = require('./util/database');
 
@@ -45,6 +46,9 @@ forgetpassword.belongsTo(User,{constraints:true, onDelete:'CASCADE'})
 
 User.hasMany(Downloads);
 Downloads.belongsTo(User,{constraints:true, onDelete:'CASCADE'})
+
+User.hasMany(Order);
+Order.belongsTo(User,{constraints:true, onDelete:'CASCADE'})
 
 // sequelize.sync({ alter: true })
 sequelize.sync();
