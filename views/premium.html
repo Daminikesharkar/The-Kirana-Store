@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/userStore.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title>Premium member Page</title>
+    <style>  
+        .nav-links .active {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+        }
+        .overview {
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            height: 80vh;
+        }
+        .container {
+            width: 460px;
+            padding: 40px;
+            background: #ffffff;
+            text-align: center;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        .container .title {
+            font-size: 2rem;
+            color: #333;
+        }
+        .container .price {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin: 15px 0;
+        }
+        .container span {
+            font-size: 1.2rem;
+        }
+        .container .description {
+            color: #3b3b3b;
+            font-size: 1.1rem;
+            margin: 20px 0 20px;
+        }
+        .container .offer {
+            display: block;
+            color: #555;
+            font-size: 1rem;
+            margin-top: 25px;
+        }
+        .subscribe-button {
+            display: inline-block;
+            padding: 15px 0;
+            background-color: var(--primary-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            margin-top: 40px;
+            width: 100%;
+            font-weight: 500;
+            transition: 0.2s ease;
+        }
+        .subscribe-button:hover {
+            background: var(--primary-color);
+        }
+        .ribbon-wrap {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            pointer-events: none;
+        }
+        .ribbon {
+            width: 230px;
+            font-size: 0.918rem;
+            text-align: center;
+            padding: 8px 0;
+            background: var(--primary-color);
+            color: #fff;
+            position: absolute;
+            transform: rotate(-45deg);
+            right: -17px;
+            top: 29%;
+        }
+        .premium-features {
+            display: none; 
+            text-align: center;
+        }
+        .premium-features h1 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-top: 50px;
+        }
+        .premium-user{
+            display: none;
+        }
+        .premium-user h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-left: auto;
+        }
+        .premium-features hr {
+            color: var(--primary-color);
+        }
+        .premium-features h2 {
+            color: var(--primary-color);
+            margin-top: 30px;
+        }
+
+        .premium-cards {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 80px;
+        }
+
+        .premium-card {
+            width: 45%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .premium-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .premium-card p {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .show-button {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .show-button:hover {
+            background-color: var(--primary-color);
+        }
+        .premium-features-leaderboard,
+        .premium-features-download{
+            display: none;
+        }
+
+        .premium-features-download {
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            height: 100%; 
+            text-align: center; 
+            margin-top: 50px;
+        }
+
+        .premium-features-download span {
+            color: #888; 
+        }
+
+        
+        .premium-features-leaderboard table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .premium-features-leaderboard th,
+        .premium-features-leaderboard td {
+            border-bottom: 2px solid #ddd; 
+            padding: 8px;
+            text-align: left;
+        }
+        .premium-features-leaderboard td{
+            font-weight: normal
+        }
+
+        .premium-features-leaderboard th {
+            background-color: #aee4cc;
+            font-weight: bold;
+        }
+
+        </style>
+</head>
+<body>
+    <nav>
+
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="images/logo.jpg" alt="">
+            </div>
+            <span class="logo_name">Kiranastore</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li>
+                    <a id="dashboardLink" href="/userStore"> <i class="uil uil-estate"></i> <span  class="link-name">Dahsboard</span> </a>
+                </li>
+                <li>
+                    <a id="historyLink" href="/history"><i class="uil uil-files-landscapes"></i> <span class="link-name">History</span> </a>
+                </li>
+                <li class="active">
+                    <a id="buyPremiumLink" href="/"><i class="uil uil-brightness-plus"></i> <span class="link-name">Buy premium</span> </a>
+                </li>
+            </ul>
+
+            <ul class="logout-mode">
+                <li>
+                    <a href="#"><i class="uil uil-signout"></i> <span class="link-name">Logout</span> </a>
+                </li>
+                <li class="mode">
+                    <a href="#"><i class="uil uil-moon"></i> <span class="link-name">Dark Mode</span></a>
+                    <div class="mode-toggle">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+            <div class="premium-user">
+                <h3>You are a premium user</h3>
+            </div>
+            <img src="images/user.jpg" alt="">
+        </div>
+
+        <div class="dash-content">
+            <div class="overview">
+                <div class="container">
+                    <h2 class="title">Unlock Exclusive Content</h2>
+                    <h3 class="price">Rs.899<span>/month</span></h3>
+                    <p class="description">Gain exclusive access to our premium content. Explore and see Leaderboard and download your reports for better decisions.</p>
+                    <b class="offer">Act fast! Offer ends soon</b>
+                    <a id="premiumButton" class="subscribe-button" href="#">Buy Premium Now</a>
+                    <div class="ribbon-wrap">
+                      <div class="ribbon">Special Offer!</div>
+                    </div>
+                </div>                
+            </div>
+            <div class="premium-features">
+                <div class="title">
+                    <i class="uil uil-star"></i>
+                    <span class="text">Premium Features</span>
+                </div>
+
+                <div class="premium-cards">
+                    <div class="premium-card">
+                        <h3>Leaderboard</h3>
+                        <p>Monitor your spending. Dive into the Leaderboard</p>
+                        <button id="show-leaderboard" class="show-button">Show Leaderboard</button>
+                    </div>
+                    <div class="premium-card">
+                        <h3>Download Reports</h3>
+                        <p>Download your reports for better decisions</p>
+                        <button id="show-download" class="show-button">Start Download</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="premium-features-leaderboard">
+                <div class="title">
+                    <i class="uil uil-arrow-up"></i>
+                    <span class="text">Leaderboard</span>
+                </div>
+                <div class="leaderboard-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Total Spend</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Damini</td>
+                                <td>5000</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Minakshi</td>
+                                <td>4500</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Akanksha</td>
+                                <td>4000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="premium-features-download">
+                <span>---- Go to history section and start downloading your reports ----</span>  
+            </div>            
+        </div>
+    </section>
+
+    <script type="module" src="js/userStore.js"></script>
+    <script type="module" src="js/premium.js"></script>
+</body>
+</html>

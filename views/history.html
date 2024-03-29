@@ -67,7 +67,7 @@
         }
 
         .button-container {
-            position: sticky;
+            /* position: sticky; */
             top: 0;
             background-color: var(--panel-color);
             padding: 40px 0px 0px 0px;
@@ -76,6 +76,7 @@
             justify-content: center;
             align-items: center;
             width: 100%;
+            margin-top: 50px;
         }
 
         .time-button {
@@ -140,7 +141,7 @@
                     <a><i class="uil uil-files-landscapes"></i> <span class="link-name">History</span> </a>
                 </li>
                 <li>
-                    <a href="/buyPremium"><i class="uil uil-brightness-plus"></i> <span class="link-name">Buy premium</span> </a>
+                    <a href="/premium"><i class="uil uil-brightness-plus"></i> <span class="link-name">Buy premium</span> </a>
                 </li>
                 
             </ul>
@@ -160,6 +161,12 @@
     </nav>
 
     <section class="dashboard">
+
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+            <img src="images/user.jpg" alt="">
+        </div>
+
         <div class="button-container">
             <button class="time-button" id="weeklyButton">Weekly</button>
             <button class="time-button" id="monthlyButton">Monthly</button>
@@ -288,5 +295,6 @@
         </div>
     </section>
     <script type="module" src="js/history.js"></script>
+    <script type="module" src="js/userStore.js"></script>
 </body>
 </html>

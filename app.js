@@ -10,6 +10,7 @@ const homePageRoutes = require('./routes/home');
 const userStorePageRoutes = require('./routes/userStore');
 const forgetPasswordPageRoutes = require('./routes/forgetPassword');
 const historyPageRoute = require('./routes/history');
+const premiumPageRoutes = require('./routes/premium');
 
 const User = require('./models/users');
 const Products = require('./models/kiranaProducts');
@@ -34,6 +35,7 @@ app.use(homePageRoutes);
 app.use(userStorePageRoutes);
 app.use(forgetPasswordPageRoutes);
 app.use(historyPageRoute);
+app.use(premiumPageRoutes);
 
 User.hasMany(Products);
 Products.belongsTo(User,{constraints:true, onDelete:'CASCADE'});

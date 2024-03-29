@@ -41,6 +41,13 @@ historyLink.addEventListener("click", function(event) {
     window.location.href = "/history";
 });
 
+const premiumLink = document.getElementById("buyPremiumLink");
+premiumLink.addEventListener("click", function(event) {
+    event.preventDefault();
+
+    window.location.href = "/premium";
+});
+
 const form = document.querySelector('form');
 
 const item = document.getElementById('item');
