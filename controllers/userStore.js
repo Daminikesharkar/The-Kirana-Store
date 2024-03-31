@@ -1,6 +1,7 @@
 const path = require('path');
 const kiranaProducts = require('../models/kiranaProducts');
 const User = require('../models/users');
+const sequelize = require('../util/database');
 
 const userStorePagePath = path.join(__dirname,'../views/userStore.html');
 
@@ -10,24 +11,28 @@ exports.displayUserStorePage = (req,res)=>{
 
 exports.addProducts = async (req,res)=>{
     const {item,quantity,category,price} = req.body;
+    const transaction = await sequelize.transaction();
 
-    try {
+    try {        
         const newProduct = await kiranaProducts.create({
             item:item,
             quantity:quantity,
             category:category,
             price:price,
             userId:req.user.id
-        })
+        },{transaction})
         const total_spend = Number(req.user.totalspend) + Number(price);
-        await User.update({totalspend:total_spend},{where:{id:req.user.id}});
-
+        await User.update({totalspend:total_spend},{where:{id:req.user.id}},{transaction});
+        await transaction.commit();
         return res.status(200).json({
             message: 'Product added successfully',
             product: newProduct
         });
         
     } catch (error) {
+        if (transaction) {
+            await transaction.rollback();
+        }
         res.status(500).json({error: 'Error adding product'});
     }
 }
@@ -63,17 +68,20 @@ exports.getAllProducts = async (req, res) => {
 }
 
 exports.deleteProduct = async (req,res)=>{
+    const transaction = await sequelize.transaction();
     try {
-        const id = req.params.id;
+        const id = req.params.id;        
         const product = await kiranaProducts.findByPk(id);
 
         const total_spend = Number(req.user.totalspend) - Number(product.price);
-        await User.update({totalspend:total_spend},{where:{id:req.user.id}});
+        await User.update({totalspend:total_spend},{where:{id:req.user.id}},{transaction});
 
         await product.destroy();
+        await transaction.commit();
 
         return res.json({ message: 'product deleted successfully' });
     } catch (error) {
+        await transaction.rollback();
         res.status(500).json({error: 'Error deleting product'});
     }
 }
