@@ -39,6 +39,8 @@ const item = document.getElementById('item');
 const quantity = document.getElementById('quantity');
 const category = document.getElementById('category');
 const price = document.getElementById('price');
+
+const logout = document.getElementById('logout');
   
 form.addEventListener('submit', (e)=> {
     e.preventDefault();
@@ -240,6 +242,18 @@ async function displayAllProducts(){
         console.error("Error getting all products", error.message);
     }
 }
+
+logout.addEventListener('click',async (e)=>{
+    e.preventDefault();
+    try {
+        localStorage.removeItem('token');
+        alert('User logged out successfully');
+        window.location.href = `/`;
+        
+    } catch (error) {
+        console.error("Error logging out", error.message);
+    }
+})
 
 window.addEventListener('load',()=>{
     displayAllProducts();
