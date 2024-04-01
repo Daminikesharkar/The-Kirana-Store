@@ -11,7 +11,7 @@ const yearlyTable = document.getElementById('yearlyTable');
 const dowloadHistoryTable = document.getElementById('dowloadHistoryTable');
 
 const weeklyDownload = document.getElementById('weekly-download');
-const monthlyDownload = document.getElementById('monthly-downloadn');
+const monthlyDownload = document.getElementById('monthly-download');
 const yearlyDownload = document.getElementById('yearly-download');
 
         
@@ -24,12 +24,45 @@ weeklyButton.addEventListener('click', function () {
 monthlyButton.addEventListener('click', function () {
     showTable(monthlyTable);
     hideTables([weeklyTable, yearlyTable,dowloadHistoryTable]);
+    getMonthlydata();
 });
 
 yearlyButton.addEventListener('click', function () {
     showTable(yearlyTable);
     hideTables([weeklyTable, monthlyTable,dowloadHistoryTable]);
+    getYearlydata();
 });
+
+
+monthlyDownload.addEventListener('click',()=>{
+    downloadReports('monthly');
+})
+yearlyDownload.addEventListener('click',()=>{
+    downloadReports('yearly');
+})
+weeklyDownload.addEventListener('click',()=>{
+    downloadReports('weekly');
+})
+
+async function downloadReports(when){
+    try {
+        console.log(when);
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`/downloadFile/?when=${when}`,{headers:{"Authorization":token}})
+
+        if(response.status === 200){
+            var a = document.createElement("a");
+            a.href = response.data.fileurl;
+            a.download = 'myexpense.csv';
+            a.click();
+        } else {
+            throw new Error(response.data.message)
+        }
+        
+    } catch (error) {
+        console.error("Error downloading file", error.message);
+    }
+}
 
 downloadHistoryButton.addEventListener('click', function () {
     showTable(dowloadHistoryTable);
@@ -78,26 +111,26 @@ function addUrlsToUI(urls){
     }
 }
 
-weeklyDownload.addEventListener('click',async ()=>{
+// weeklyDownload.addEventListener('click',async ()=>{
 
-    try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('/downloadFile',{headers:{"Authorization":token}})
+//     try {
+//         const token = localStorage.getItem('token');
+//         const response = await axios.get('/downloadFile',{headers:{"Authorization":token}})
 
-        if(response.status === 200){
-            var a = document.createElement("a");
-            a.href = response.data.fileurl;
-            a.download = 'myexpense.csv';
-            a.click();
-        } else {
-            throw new Error(response.data.message)
-        }
+//         if(response.status === 200){
+//             var a = document.createElement("a");
+//             a.href = response.data.fileurl;
+//             a.download = 'myexpense.csv';
+//             a.click();
+//         } else {
+//             throw new Error(response.data.message)
+//         }
         
-    } catch (error) {
-        console.error("Error downloading file", error.message);
-    }
+//     } catch (error) {
+//         console.error("Error downloading file", error.message);
+//     }
     
-})
+// })
 
 
 //show weekly products
@@ -105,6 +138,7 @@ async function getWeeklydata(){
     try {
         const token = localStorage.getItem('token');
         const response = await axios.get('/getWeeklyData',{headers:{"Authorization":token}});
+        const classname = '.tbl-content tbody';
 
         const tableBody = document.querySelector('.tbl-content tbody');
         tableBody.innerHTML = '';
@@ -113,7 +147,7 @@ async function getWeeklydata(){
 
         for(let i=0;i<length;i++){
             const product = response.data.products[i];
-            addProductsToUI(product)
+            addProductsToUI(product,classname)
         }
         
     } catch (error) {
@@ -121,8 +155,52 @@ async function getWeeklydata(){
     }
 }
 
-function addProductsToUI(userdata) {
-    const tableBody = document.querySelector('.tbl-content tbody');
+//show monthly products
+async function getMonthlydata(){
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('/getMonthlyData',{headers:{"Authorization":token}});
+        const classname = '.tbl-content-monthly tbody';
+
+        const tableBody = document.querySelector('.tbl-content-monthly tbody');
+        tableBody.innerHTML = '';
+
+        const length = Object.keys(response.data.products).length;
+
+        for(let i=0;i<length;i++){
+            const product = response.data.products[i];
+            addProductsToUI(product,classname)
+        }
+        
+    } catch (error) {
+        console.error("Error getting weekly data", error);
+    }
+}
+
+//show yearly products
+async function getYearlydata(){
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('/getYearlyData',{headers:{"Authorization":token}});
+        const classname = '.tbl-content-yearly tbody';
+
+        const tableBody = document.querySelector('.tbl-content-yearly tbody');
+        tableBody.innerHTML = '';
+
+        const length = Object.keys(response.data.products).length;
+
+        for(let i=0;i<length;i++){
+            const product = response.data.products[i];
+            addProductsToUI(product,classname)
+        }
+        
+    } catch (error) {
+        console.error("Error getting weekly data", error);
+    }
+}
+
+function addProductsToUI(userdata,classname) {
+    const tableBody = document.querySelector(classname);
 
     const row = document.createElement('tr');
     row.innerHTML = `

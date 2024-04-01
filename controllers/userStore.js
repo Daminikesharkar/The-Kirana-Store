@@ -22,13 +22,13 @@ exports.addProducts = async (req,res)=>{
             userId:req.user.id
         },{transaction})
         const total_spend = Number(req.user.totalspend) + Number(price);
-        await User.update({totalspend:total_spend},{where:{id:req.user.id}},{transaction});
+        await User.update({ totalspend: total_spend }, { where: { id: req.user.id }, transaction });
         await transaction.commit();
         return res.status(200).json({
             message: 'Product added successfully',
             product: newProduct
-        });
-        
+        });     
+    
     } catch (error) {
         if (transaction) {
             await transaction.rollback();
