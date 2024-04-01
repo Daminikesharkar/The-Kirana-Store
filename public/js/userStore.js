@@ -2,28 +2,13 @@ import axios from 'https://cdn.jsdelivr.net/npm/axios@1.5.1/+esm';
 import { v4 as uuidv4 } from 'https://cdn.skypack.dev/uuid';
 
 const body = document.querySelector("body");
-const modeToggle = body.querySelector(".mode-toggle");
 const sidebar = body.querySelector("nav");
 const sidebarToggle = body.querySelector(".sidebar-toggle");
-
-let getMode = localStorage.getItem("mode");
-if(getMode && getMode ==="dark"){
-    body.classList.toggle("dark");
-}
 
 let getStatus = localStorage.getItem("status");
 if(getStatus && getStatus ==="close"){
     sidebar.classList.toggle("close");
 }
-
-modeToggle.addEventListener("click", () =>{
-    body.classList.toggle("dark");
-    if(body.classList.contains("dark")){
-        localStorage.setItem("mode", "dark");
-    }else{
-        localStorage.setItem("mode", "light");
-    }
-});
 
 sidebarToggle.addEventListener("click", () => {
     sidebar.classList.toggle("close");
@@ -35,15 +20,15 @@ sidebarToggle.addEventListener("click", () => {
 })
 
 const historyLink = document.getElementById("historyLink");
-historyLink.addEventListener("click", function(event) {
-    event.preventDefault();
+historyLink.addEventListener("click", (e)=> {
+    e.preventDefault();
 
     window.location.href = "/history";
 });
 
 const premiumLink = document.getElementById("buyPremiumLink");
-premiumLink.addEventListener("click", function(event) {
-    event.preventDefault();
+premiumLink.addEventListener("click", (e)=> {
+    e.preventDefault();
 
     window.location.href = "/premium";
 });
@@ -55,8 +40,8 @@ const quantity = document.getElementById('quantity');
 const category = document.getElementById('category');
 const price = document.getElementById('price');
   
-form.addEventListener('submit', function(event) {
-    event.preventDefault();
+form.addEventListener('submit', (e)=> {
+    e.preventDefault();
 
     const userdata = {
         item:item.value,
@@ -90,13 +75,6 @@ function addProductsToUI(userdata){
     categoryData.innerHTML += `<span class="data-list" id="category-${uniqueId}">${userdata.category}</span>`;
     priceData.innerHTML += `<span class="data-list" id="price-${uniqueId}">${userdata.price}</span>`;
     manageData.innerHTML += `<span class="data-list" id="${uniqueId}"> <a class="delete" href="#" data-user-data='${JSON.stringify(userdata)}'>remove</a> </span>`;
-
-
-    // itemData.innerHTML = newItemSpan + itemData.innerHTML;
-    // quantityData.innerHTML = newQuantitySpan + quantityData.innerHTML;
-    // categoryData.innerHTML = newCategorySpan + categoryData.innerHTML;
-    // priceData.innerHTML = newPriceSpan + priceData.innerHTML;
-    // manageData.innerHTML = newDeleteSpan + manageData.innerHTML;
 
 }
 
